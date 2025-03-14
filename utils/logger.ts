@@ -8,6 +8,12 @@ export class Logger {
         highWaterMark: 16384,
     })
 
+    constructor() {
+        this.writer.on('error', (error) => {
+            console.log(`Error occured while logging.\nError:${error}`);
+        });
+    }
+
     async log(message: string, silent: boolean = false) {
         try {
             if (!silent) {
@@ -18,6 +24,10 @@ export class Logger {
         catch (error) {
             console.log(`Error occured while logging.\nError:${error}`);
         }
+    }
+
+    endLog() {
+        this.writer.end();
     }
 }
 
